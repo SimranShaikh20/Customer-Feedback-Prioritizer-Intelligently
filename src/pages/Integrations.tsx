@@ -1,4 +1,5 @@
 import DashboardLayout from "@/components/DashboardLayout";
+import NotionIntegration from "@/components/integrations/NotionIntegration";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -10,22 +11,7 @@ const Integrations = () => {
         <h1 className="text-3xl font-bold">Integrations</h1>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Card className="border-border">
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <CardTitle>Notion</CardTitle>
-                <Badge variant="outline">Coming Soon</Badge>
-              </div>
-              <CardDescription>
-                Sync your prioritized feedback directly to Notion databases for team collaboration
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Button disabled className="w-full">
-                Connect Notion
-              </Button>
-            </CardContent>
-          </Card>
+          <NotionIntegration />
 
           <Card className="border-border">
             <CardHeader>

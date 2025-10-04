@@ -2,3 +2,6 @@ project_id = "jdqiqzzziqkrnmjghrqd"
 
 [functions.analyze-feedback]
 verify_jwt = false
+
+[functions.sync-to-notion]
+verify_jwt = true
