@@ -80,6 +80,45 @@ export type Database = {
         }
         Relationships: []
       }
+      integration_settings: {
+        Row: {
+          api_key: string | null
+          created_at: string
+          database_id: string | null
+          id: string
+          integration_type: string
+          is_active: boolean | null
+          last_sync_at: string | null
+          settings: Json | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          api_key?: string | null
+          created_at?: string
+          database_id?: string | null
+          id?: string
+          integration_type: string
+          is_active?: boolean | null
+          last_sync_at?: string | null
+          settings?: Json | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          api_key?: string | null
+          created_at?: string
+          database_id?: string | null
+          id?: string
+          integration_type?: string
+          is_active?: boolean | null
+          last_sync_at?: string | null
+          settings?: Json | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -107,6 +146,39 @@ export type Database = {
           id?: string
           organization_id?: string
           updated_at?: string
+        }
+        Relationships: []
+      }
+      sync_history: {
+        Row: {
+          created_at: string
+          error_details: string | null
+          id: string
+          integration_type: string
+          items_synced: number | null
+          status: string
+          sync_type: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          error_details?: string | null
+          id?: string
+          integration_type: string
+          items_synced?: number | null
+          status: string
+          sync_type: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          error_details?: string | null
+          id?: string
+          integration_type?: string
+          items_synced?: number | null
+          status?: string
+          sync_type?: string
+          user_id?: string
         }
         Relationships: []
       }
