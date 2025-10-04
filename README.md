@@ -835,14 +835,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-## 📞 Support
-
-- **Documentation**: [Full Docs](https://docs.yoursite.com)
-- **Email**: support@feedbackiq.com
-- **Twitter**: [@FeedbackIQ](https://twitter.com/feedbackiq)
-- **Discord**: [Join our community](https://discord.gg/feedbackiq)
-
----
 
 ## 🗺️ Roadmap
 
