@@ -88,16 +88,32 @@
 
 ### 🔗 Integrations
 
-#### Notion Integration (Active)
+FeedbackIQ seamlessly connects with your favorite tools to streamline your feedback workflow.
+
+#### ✅ Notion Integration (Active)
 - **Two-way Sync**: Automatically sync high-priority feedback to Notion databases
 - **Customizable Filters**: Choose which feedback to sync based on priority score
 - **Manual & Auto Sync**: Trigger syncs manually or set up automatic syncing
 - **Rich Data Mapping**: Syncs all relevant fields including category, priority, sentiment, and more
 - **Sync History**: Track all sync operations with detailed logs
 
-#### Coming Soon
-- **Slack**: Get notifications for high-priority feedback
-- **Zapier**: Connect with 5,000+ apps
+#### ✅ Slack Integration (Active)
+- **Real-time Notifications**: Get instant alerts when high-priority feedback is detected
+- **Customizable Triggers**: Set priority thresholds for notifications
+- **Rich Formatting**: Beautiful message formatting with all feedback details
+- **Channel Selection**: Choose which channel receives notifications
+
+#### ✅ Zapier Integration (Active)
+- **5,000+ Apps**: Connect FeedbackIQ with Gmail, Trello, Asana, HubSpot, and more
+- **Flexible Triggers**: Send all feedback or only high-priority items
+- **Webhook-Based**: Simple webhook integration with any Zapier Zap
+- **Custom Workflows**: Build complex automation workflows
+
+#### ✅ Jira Integration (Active)
+- **Auto-Create Tickets**: Automatically create Jira issues from high-priority feedback
+- **Customizable Mapping**: Configure issue type, project, and default assignee
+- **Priority Sync**: Feedback priority scores map to Jira priorities
+- **Bi-directional Linking**: Track Jira ticket keys in feedback notes
 - **Jira**: Auto-create tickets from feedback
 
 ---
@@ -614,20 +630,101 @@ const priorityScore = (impactScore * 10) + (urgencyWeight * 5) + frequencyBonus;
 **Setup:**
 1. Go to Integrations page
 2. Click "Connect Notion"
-3. Enter API key and database ID
-4. Click "Test Connection"
-5. Configure sync settings
-6. Activate integration
+3. Enter API key from [notion.so/my-integrations](https://www.notion.so/my-integrations)
+4. Enter Notion database ID (from database URL)
+5. Click "Test Connection"
+6. Configure sync settings:
+   - Enable auto-sync for high-priority items
+   - Set minimum priority score (default: 80)
+7. Activate integration
 
 **Manual Sync:**
 1. Click "Sync Now" button
 2. Monitor progress
-3. Check sync history
+3. Check sync history for details
 
 **Auto Sync:**
 - Enable "Auto-sync high priority items"
 - Set minimum priority threshold
 - Items automatically sync when they meet criteria
+
+### Slack Notifications
+
+**Setup:**
+1. Go to Integrations page
+2. Click "Connect Slack"
+3. Create an Incoming Webhook in Slack:
+   - Go to [api.slack.com/messaging/webhooks](https://api.slack.com/messaging/webhooks)
+   - Click "Create New App" → "From scratch"
+   - Add "Incoming Webhooks" feature
+   - Activate and create webhook
+4. Copy webhook URL and paste in FeedbackIQ
+5. Click "Test Connection" to verify
+6. Configure notification settings:
+   - Enable notifications for high-priority feedback
+   - Set minimum priority score (default: 80)
+   - Optional: Set specific channel name
+7. Activate integration
+
+**What Gets Notified:**
+- High-priority feedback (above your threshold)
+- Feedback details including priority score, urgency, category
+- Customer information if available
+- Direct link to view in FeedbackIQ
+
+### Zapier Automation
+
+**Setup:**
+1. Create a new Zap at [zapier.com](https://zapier.com)
+2. Choose "Webhooks by Zapier" as trigger
+3. Select "Catch Hook" as trigger event
+4. Copy the webhook URL provided by Zapier
+5. Go to FeedbackIQ Integrations page
+6. Click "Connect Zapier"
+7. Paste webhook URL
+8. Click "Test Connection"
+9. Configure trigger settings:
+   - **Trigger on new feedback**: Send all new feedback items
+   - **Trigger on high priority**: Only send high-priority items
+   - Set minimum priority score (default: 80)
+10. Activate integration
+11. Return to Zapier and configure your action (e.g., create Trello card, send email, etc.)
+
+**Popular Zapier Workflows:**
+- **Gmail**: Email high-priority feedback to your team
+- **Trello**: Create cards for each feedback item
+- **Google Sheets**: Log all feedback to a spreadsheet
+- **Asana**: Create tasks for feature requests
+- **HubSpot**: Add feedback to CRM contacts
+- **Microsoft Teams**: Post notifications to channels
+
+### Jira Ticket Creation
+
+**Setup:**
+1. Create Jira API token:
+   - Go to [id.atlassian.com/manage-profile/security/api-tokens](https://id.atlassian.com/manage-profile/security/api-tokens)
+   - Click "Create API token"
+   - Copy the token
+2. Go to FeedbackIQ Integrations page
+3. Click "Connect Jira"
+4. Fill in:
+   - **Jira Domain**: yourcompany.atlassian.net (without https://)
+   - **Email**: Your Jira account email
+   - **API Token**: Token from step 1
+   - **Project Key**: Your Jira project key (e.g., PROJ, FB)
+5. Click "Test Connection" to verify
+6. Configure ticket settings:
+   - Enable auto-create for high-priority feedback
+   - Set minimum priority score (default: 80)
+   - Choose issue type (Task, Bug, Story, Epic)
+   - Optional: Set default assignee
+7. Activate integration
+
+**Ticket Details:**
+- **Summary**: [Feedback] Category - Priority Score
+- **Description**: Full feedback text with metadata
+- **Labels**: feedback, priority-XX, urgency-level
+- **Link**: Feedback ID stored in notes for tracking
 
 ---
 
@@ -691,6 +788,93 @@ Syncs feedback items to Notion database.
   "success": true,
   "items_synced": 15,
   "database_name": "Feedback Database" // for test
+}
+```
+
+#### `notify-slack`
+
+Sends Slack notifications for high-priority feedback.
+
+**Endpoint:** `POST /functions/v1/notify-slack`
+
+**Request (Test Connection):**
+```json
+{
+  "action": "test",
+  "webhook_url": "https://hooks.slack.com/services/..."
+}
+```
+
+**Request (Send Notification):**
+```json
+{
+  "action": "notify",
+  "webhook_url": "https://hooks.slack.com/services/...",
+  "feedback": {
+    "id": "uuid",
+    "feedback_text": "string",
+    "priority_score": 85,
+    "urgency": "High",
+    "category": "Feature Request",
+    "source": "In-App",
+    "customer_name": "John Doe",
+    "customer_email": "john@example.com"
+  }
+}
+```
+
+**Response:**
+```json
+{
+  "success": true
+}
+```
+
+#### `sync-to-jira`
+
+Creates Jira tickets from high-priority feedback.
+
+**Endpoint:** `POST /functions/v1/sync-to-jira`
+
+**Request (Test Connection):**
+```json
+{
+  "action": "test",
+  "domain": "yourcompany.atlassian.net",
+  "email": "your@email.com",
+  "api_token": "your_token",
+  "project_key": "PROJ"
+}
+```
+
+**Request (Create Ticket):**
+```json
+{
+  "action": "create",
+  "domain": "yourcompany.atlassian.net",
+  "email": "your@email.com",
+  "api_token": "your_token",
+  "project_key": "PROJ",
+  "issue_type": "Task",
+  "feedback": {
+    "id": "uuid",
+    "feedback_text": "string",
+    "priority_score": 85,
+    "urgency": "High",
+    "category": "Feature Request",
+    "source": "In-App",
+    "customer_name": "John Doe",
+    "customer_email": "john@example.com"
+  }
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "issue_key": "PROJ-123",
+  "issue_url": "https://yourcompany.atlassian.net/browse/PROJ-123"
 }
 ```
 
@@ -845,9 +1029,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - ✅ Analytics dashboard
 
 ### Q3 2025
-- 🚧 Slack integration
-- 🚧 Zapier integration
-- 🚧 Jira integration
+- ✅ Slack integration
+- ✅ Zapier integration
+- ✅ Jira integration
 - 📋 API webhooks
 - 📋 Custom fields
 - 📋 Advanced reporting
