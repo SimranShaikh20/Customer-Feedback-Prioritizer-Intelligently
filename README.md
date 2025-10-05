@@ -16,7 +16,7 @@
 
 </div>
 
-App Link [https://customer-feedback-prioritizer-intel.vercel.app/]
+[App Link ](https://customer-feedback-prioritizer-intel.vercel.app/)
 ---
 
 ## 📋 Table of Contents
