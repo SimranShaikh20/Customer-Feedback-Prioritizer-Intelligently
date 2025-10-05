@@ -1,4 +1,4 @@
-# FeedbackIQ 🚀
+# Customer Feedback Prioritizer Intelligently 🚀
 
 <div align="center">
 
@@ -16,6 +16,7 @@
 
 </div>
 
+App Link [https://customer-feedback-prioritizer-intel.vercel.app/]
 ---
 
 ## 📋 Table of Contents
